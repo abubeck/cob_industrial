@@ -11,6 +11,8 @@
 #include <actionlib/server/simple_action_server.h>
 #include <brics_showcase_industry_interfaces/MoveArmCartAction.h>
 
+#include <brics_showcase_industry_interfaces/MoveGripper.h>
+
 
 
 #include <cob_kuka_xmlkrc_common.cpp>
@@ -50,8 +52,8 @@ class cob_kuka_xmlkrc_ros
         		n_.param("Init_remap", Init_remap, (std::string)"Init");
         		Init_ = n_.advertiseService<cob_srvs::Trigger::Request , cob_srvs::Trigger::Response>(Init_remap, boost::bind(&cob_kuka_xmlkrc_impl::callback_Init, &component_implementation_,_1,_2,component_config_));
         		std::string MoveLin_BL_remap;
-        		n_.param("MoveLin_BL_remap", MoveLin_BL_remap, (std::string)"MoveLin_BL");
-        		MoveLin_BL_ = n_.advertiseService<cob_srvs::Trigger::Request , cob_srvs::Trigger::Response>(MoveLin_BL_remap, boost::bind(&cob_kuka_xmlkrc_impl::callback_MoveLin_BL, &component_implementation_,_1,_2,component_config_));
+        		n_.param("MoveLin_BL_remap", MoveLin_BL_remap, (std::string)"MoveGripper");
+        		MoveLin_BL_ = n_.advertiseService<brics_showcase_industry_interfaces::MoveGripper::Request , brics_showcase_industry_interfaces::MoveGripper::Response>(MoveLin_BL_remap, boost::bind(&cob_kuka_xmlkrc_impl::callback_MoveLin_BL, &component_implementation_,_1,_2,component_config_));
         
 				joint_states_ = 	n_.advertise<sensor_msgs::JointState>("joint_states", 1);
 				cart_pose_ = 	n_.advertise<geometry_msgs::PoseStamped>("cart_pose", 1);

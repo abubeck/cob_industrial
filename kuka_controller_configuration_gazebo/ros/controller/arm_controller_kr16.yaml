@@ -27,7 +27,7 @@ arm_controller:
       p: 2050.0
       d: 30.0
 
-  arm_joint_trajectory_action_node:
+  joint_trajectory_action:
     joints:
       - arm_1_joint
       - arm_2_joint

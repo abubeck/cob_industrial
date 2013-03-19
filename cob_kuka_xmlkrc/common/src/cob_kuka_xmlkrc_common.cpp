@@ -99,12 +99,28 @@ public:
 		/* protected region user implementation of service callback for Init end */
 		return true;
 	}
-	bool callback_MoveLin_BL(cob_srvs::Trigger::Request  &req, cob_srvs::Trigger::Response &res , cob_kuka_xmlkrc_config config)
+	bool callback_MoveLin_BL(brics_showcase_industry_interfaces::MoveGripper::Request  &req, brics_showcase_industry_interfaces::MoveGripper::Response &res , cob_kuka_xmlkrc_config config)
 	{
 		/* protected region user implementation of service callback for MoveLin_BL on begin */
-        printf("Sending command");
-		kuka_client_.moveLIN(5, KukaFrame(0,-700,443,170,1,179), 0.2);
-        printf("Function returned");
+		/* protected region user implementation of service callback for MoveGripper on begin */
+		std::cout << "MoveGripper service called" << std::endl;
+		if(req.open == 0) //closing gripper
+		{
+			kuka_client_.setIo(8, 1, false);
+			std::cout << "MoveGripper opened" << std::endl;
+			sleep(6.0);
+			return true;
+		}
+		if(req.open == 1) //opening gripper
+		{
+			kuka_client_.setIo(8, 1, true);
+			std::cout << "MoveGripper closed" << std::endl;
+			sleep(6.0);
+			return true;
+		}
+
+        
+		//kuka_client_.moveLIN(5, KukaFrame(0,-700,443,170,1,179), 0.2);
         //kuka_client_.setIo(8, 0, true);
 		/* protected region user implementation of service callback for MoveLin_BL end */
 		return true;
